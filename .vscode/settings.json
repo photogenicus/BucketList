@@ -1,19 +1,19 @@
 {
-  "editor.formatOnsave": false,
+  "editor.formatOnSave": false,
   "[javascript]": {
-    "editor.formatOnsave": false
+    "editor.formatOnSave": false
   },
   "[javascriptreact]": {
-    "editor.formatOnsave": false
+    "editor.formatOnSave": false
   },
   "eslint.validate": ["html", "javascript", "javascriptreact"],
-  "prettier.disabledLanguages": ["javascript", "javascriptreact"],
-  "eslist.workingDirectories": [
+  "prettier.disableLanguages": ["javascript", "javascriptreact"],
+  "eslint.workingDirectories": [
     {
       "mode": "auto"
     }
   ],
-  "editor.codeActionsOnsave": {
+  "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }
 }
