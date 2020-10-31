@@ -1,9 +1,10 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
-    entry:[path.resolve(__dirname, '../src/index.js')],
+    entry:['./client/src/index.js'],
     output: {
-        path: path.resolve(__dirname, '../../dist'),
+        path: path.resolve(__dirname, './dist'),
         filename: 'bundle.js',
     },
     resolve: {
@@ -24,6 +25,20 @@ module.exports = {
                 ]
             }
         ]
-    }
+    },
+    devServer: {
+        port: 8080,
+        open: true,
+        hot: true,
+        publicPath: "/dist/",
+        proxy: [
+            {
+              context: ["/api", "/login", "/image"],
+              target: 'http://localhost:3000',
+            },
+          ],
+
+    },
+    plugins: [new webpack.HotModuleReplacementPlugin()],
 
 }

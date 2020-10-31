@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config client/config/webpack.config.js",
-    "start": "nodemon server/server.js"
+    "build": "webpack --config webpack.config.js",
+    "start": "cross-env NODE_ENV=production nodemon server/server.js",
+    "dev-server": "cross-env NODE_ENV=development webpack serve --config webpack.config.js ",
+    "dev": "concurrently \"npm nodemon server/server.js\" \"npm run dev-server\""
+
   },
   "repository": {
     "type": "git",
