@@ -1,11 +1,13 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const apiRouter = require('./api');
 
 const { PORT } = process.env;
 const app = express();
 
 app.use("/dist", express.static(path.join(__dirname, "../dist")));
+app.use('/api', apiRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.get('/', (req, res) =>
