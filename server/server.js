@@ -1,11 +1,14 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+const apiRouter = require('./api');
 
 const { PORT } = process.env;
 const app = express();
+app.use(express.json())
 
 app.use("/dist", express.static(path.join(__dirname, "../dist")));
+app.use('/api', apiRouter);
 
 if (process.env.NODE_ENV === 'production') {
   app.get('/', (req, res) =>
@@ -27,6 +30,4 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port:${PORT}`);
-});
+module.exports = app;
