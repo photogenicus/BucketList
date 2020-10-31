@@ -5,6 +5,7 @@ const apiRouter = require('./api');
 
 const { PORT } = process.env;
 const app = express();
+app.use(express.json())
 
 app.use("/dist", express.static(path.join(__dirname, "../dist")));
 app.use('/api', apiRouter);
@@ -29,6 +30,4 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port:${PORT}`);
-});
+module.exports = app;
