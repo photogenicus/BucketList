@@ -1,7 +1,7 @@
 import React from "react";
-import Login from "./components/Login"
-import Feed from "./components/Feed"
-import User from "./components/User"
+import Login from "./components/Login";
+import Feed from "./components/Feed";
+import User from "./components/User";
 
 function App() {
   return (

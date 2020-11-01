@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 
 const Feed = () => {
-    return (
-        <div>Hello Feed</div>
-    )
-}
+  return <div>Hello Feed</div>;
+};
 
 export default Feed;
