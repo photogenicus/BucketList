@@ -5,8 +5,7 @@ async function createAct(req, res, next) {
   try {
     const activity = await models.User.create({
       bucket_list: req.body.bucket_list,
-      bucket_desc: req.body.bucket_desc,
-    });
+      });
     if (activity) {
       console.log(activity);
       res.locals.activity = activity;
@@ -29,7 +28,7 @@ async function create(req, res, next) {
     if (user) {
       console.log(user);
       res.locals.user = user;
-      res.locals.redirect = true;
+      res.locals.loggedIn = true;
       return next();
     }
   } catch (err) {
@@ -46,11 +45,10 @@ async function validate(req, res, next) {
     if (!user) {
       res.redirect("/login");
     } else if (!(await user.validPassword(password))) {
-      console.log("Fail");
+      res.redirect("/login");
     } else {
-      console.log("Success");
-      res.locals.redirect = true;
-      // res.redirect("/user");
+      res.locals.loggedIn = true;
+      return next()
     }
   } catch (err) {
     return next(err);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 
-function Login() {
+function Login({ logIn }) {
   const [login, setLogin] = useState({ username: "", password: "" });
 
   const { username, password } = login;
@@ -26,8 +26,16 @@ function Login() {
       body: JSON.stringify(login),
     })
       .then((res) => res.json())
-      .then((data) => setLogin(data));
-    setLogin("").catch((err) => console.log(err));
+      .then((data) => {
+        setLogin("");
+        console.log('logged in: ',data);
+        if (data) {
+          logIn();
+        } else {
+          return null
+        }
+      })
+    .catch((err) => console.log(err));
   }
 
   function signUp(e) {
@@ -49,8 +57,16 @@ function Login() {
       body: JSON.stringify(login),
     })
       .then((res) => res.json())
-      .then((data) => setLogin(data));
-    setLogin("").catch((err) => console.log(err));
+      .then((data) => {
+        setLogin("");
+        console.log('logged in: ',data);
+        if (data) {
+          logIn();
+        } else {
+          return null
+        }
+      })
+    .catch((err) => console.log(err));
   }
   return (
     <div className="login-form">
