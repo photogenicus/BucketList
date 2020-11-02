@@ -8,7 +8,29 @@ function Login() {
 
   function loginInfo(e) {
     e.preventDefault();
-    console.log("Im inside loginDetails");
+    // axios
+    //   .post("/api/user", login)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    fetch("/api/login", {
+      method: "POST",
+      headers: {
+        // Accept: 'application/json',
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(login),
+    })
+      .then((res) => res.json())
+      .then((data) => setLogin(data));
+    setLogin("").catch((err) => console.log(err));
+  }
+
+  function signUp(e) {
+    e.preventDefault();
     // axios
     //   .post("/api/user", login)
     //   .then((res) => {
@@ -26,32 +48,8 @@ function Login() {
       body: JSON.stringify(login),
     })
       .then((res) => res.json())
-      .then((data) => setLogin(data))
-      .catch((err) => console.log(err));
-  }
-
-  function signUp(e) {
-    e.preventDefault();
-    console.log("Im inside loginDetails");
-    // axios
-    //   .post("/api/user", login)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    fetch("/api/user", {
-      method: "POST",
-      headers: {
-        // Accept: 'application/json',
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(login),
-    })
-      .then((res) => res.json())
-      .then((data) => setLogin(data))
-      .catch((err) => console.log(err));
+      .then((data) => setLogin(data));
+    setLogin("").catch((err) => console.log(err));
   }
   return (
     <div className="login-form">
@@ -59,7 +57,7 @@ function Login() {
         <p>Sign up for a free account</p>
       </div>
       <div className="form-details">
-        <form onSubmit={loginDetails}>
+        <form>
           <input
             type="text"
             className="login-field"
@@ -75,10 +73,16 @@ function Login() {
             value={password || ""}
             onChange={(e) => setLogin({ ...login, password: e.target.value })}
           />
-          <button type="submit">Sign up</button>
         </form>
       </div>
-      <button type="submit">Login</button>
+      <div className="login-buttons">
+        <button className="login-btn" onClick={signUp} type="submit">
+          Sign up
+        </button>
+        <button className="login-btn" onClick={loginInfo} type="submit">
+          Login
+        </button>
+      </div>
     </div>
   );
 }
