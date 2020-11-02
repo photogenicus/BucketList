@@ -1,14 +1,90 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-const Login = () => {
+function Login() {
+  const [login, setLogin] = useState({ username: "", password: "" });
+
+  const { username, password } = login;
+
+  function loginInfo(e) {
+    e.preventDefault();
+    // axios
+    //   .post("/api/user", login)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    fetch("/api/login", {
+      method: "POST",
+      headers: {
+        // Accept: 'application/json',
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(login),
+    })
+      .then((res) => res.json())
+      .then((data) => setLogin(data));
+    setLogin("").catch((err) => console.log(err));
+  }
+
+  function signUp(e) {
+    e.preventDefault();
+    // axios
+    //   .post("/api/user", login)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        // Accept: 'application/json',
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(login),
+    })
+      .then((res) => res.json())
+      .then((data) => setLogin(data));
+    setLogin("").catch((err) => console.log(err));
+  }
   return (
-    <div>
-      <input type="text" placeholder="name" />
-      <input type="password" placeholder="enter password" />
-      <button type="button">Signup</button>
-      <button type="button">Login in</button>
+    <div className="login-form">
+      <div className="sign-up-title">
+        <p>Sign up for a free account</p>
+      </div>
+      <div className="form-details">
+        <form>
+          <input
+            type="text"
+            className="login-field"
+            placeholder="Username"
+            value={username || ""}
+            onChange={(e) => setLogin({ ...login, username: e.target.value })}
+          />
+          <input
+            type="password"
+            className="login-field"
+            id="password-field"
+            placeholder="Password"
+            value={password || ""}
+            onChange={(e) => setLogin({ ...login, password: e.target.value })}
+          />
+        </form>
+      </div>
+      <div className="login-buttons">
+        <button className="login-btn" onClick={signUp} type="submit">
+          Sign up
+        </button>
+        <button className="login-btn" onClick={loginInfo} type="submit">
+          Login
+        </button>
+      </div>
     </div>
   );
-};
+}
 
 export default Login;

@@ -1,16 +1,23 @@
 const { Model } = require("sequelize");
+const bcrypt = require("bcrypt");
+
+function generateHash(user) {
+  if (user === null) {
+    throw new Error("No found employee");
+  } else if (!user.changed("password")) return user.password;
+  else {
+    const salt = bcrypt.genSaltSync();
+    return (user.password = bcrypt.hashSync(user.password, salt));
+  }
+}
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+    validPassword(password) {
+      return bcrypt.compare(password, this.password);
     }
   }
+
   User.init(
     {
       username: DataTypes.STRING,
@@ -23,5 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     },
   );
+
+  User.beforeCreate(generateHash);
+  User.beforeUpdate(generateHash);
   return User;
 };
