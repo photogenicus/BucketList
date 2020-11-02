@@ -31,4 +31,8 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
+// app.get("/user", (req, res) => {
+//   res.status(200).sendFile(path.resolve(__dirname, "../index.html"))
+// })
+
 module.exports = app;
