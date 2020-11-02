@@ -20,6 +20,26 @@ async function create(req, res, next) {
   return null;
 }
 
+async function validate(req, res, next) {
+  try {
+    const { username, password } = req.body;
+    const user = await models.User.findOne({ where: { username } });
+    console.log(user);
+    if (!user) {
+      res.redirect("/login");
+    } else if (!(await user.validPassword(password))) {
+      console.log("Fail");
+    } else {
+      console.log("Success");
+      res.redirect("/dashboard");
+    }
+  } catch (err) {
+    return next(err);
+  }
+  return null;
+}
+
 module.exports = {
   create,
+  validate,
 };
