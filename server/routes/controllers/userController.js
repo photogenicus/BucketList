@@ -1,6 +1,23 @@
 // connect to database models
 const models = require("../../../db/models");
 
+async function createAct(req, res, next) {
+  try {
+    const activity = await models.User.create({
+      bucket_list: req.body.bucket_list,
+      bucket_desc: req.body.bucket_desc,
+    });
+    if (activity) {
+      console.log(activity);
+      res.locals.activity = activity;
+      res.locals.redirect = true;
+      return next();
+    }
+  } catch (err) {
+    return next(err);
+  }
+  return null;
+}
 // create
 async function create(req, res, next) {
   try {
@@ -12,6 +29,7 @@ async function create(req, res, next) {
     if (user) {
       console.log(user);
       res.locals.user = user;
+      res.locals.redirect = true;
       return next();
     }
   } catch (err) {
@@ -31,7 +49,8 @@ async function validate(req, res, next) {
       console.log("Fail");
     } else {
       console.log("Success");
-      res.redirect("/dashboard");
+      res.locals.redirect = true;
+      // res.redirect("/user");
     }
   } catch (err) {
     return next(err);
@@ -42,4 +61,5 @@ async function validate(req, res, next) {
 module.exports = {
   create,
   validate,
+  createAct,
 };
