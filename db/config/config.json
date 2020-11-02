@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "DB_PASSWORD_DEV",
+    "password": "omertax2",
     "database": "code_collab_dev",
     "host": "127.0.0.1",
     "dialect": "postgres"
