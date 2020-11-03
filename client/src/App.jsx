@@ -31,7 +31,8 @@ function App() {
     });
   }
 
-  if (user.loggedIn === "true") return <User user={user} logIn={logIn} />;
+  if (user.loggedIn === "true")
+    return <User userName={user.username} logIn={logIn} />;
   return <Login logIn={logIn} />;
 }
 

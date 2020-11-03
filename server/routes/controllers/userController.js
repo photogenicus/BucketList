@@ -59,17 +59,19 @@ async function validate(req, res, next) {
   }
   return null;
 }
-// async function getAll(req, res, next) {
-//   try {
-
-//   } catch (err) {
-//     return next(err);
-//   }
-//   return null;
-// }
+async function getAll(req, res, next) {
+  try {
+    const users = await models.User.findAll();
+    res.locals.userList = users;
+    return next();
+  } catch (err) {
+    return next(err);
+  }
+}
 
 module.exports = {
   create,
   validate,
   createAct,
+  getAll,
 };

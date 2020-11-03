@@ -36,12 +36,12 @@ router.post(
   },
 );
 
-// router.get(
-//   "/all",
-//   jwtController.isLoggedIn,
-//   userController.getAll,
-//   (req, res) => {
-//     res.status(200).json(res.locals.user);
-//   },
-// );
+router.get(
+  "/all",
+  jwtController.isLoggedIn,
+  userController.getAll,
+  (req, res) => {
+    res.status(200).json(res.locals.userList);
+  },
+);
 module.exports = router;
