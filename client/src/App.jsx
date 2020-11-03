@@ -1,20 +1,38 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Login from "./components/Login";
-import Feed from "./components/Feed";
 import User from "./components/User";
 
 function App() {
-  return (
-    <BrowserRouter>
-      <div>
-        <Switch>
-          <Route path="/" component={Login} exact />
-          <Route path="/user" component={User} exact />
-        </Switch>
-      </div>
-    </BrowserRouter>
-  );
+  const [user, setUser] = useState({
+    username: "",
+    bucket_list: [],
+    loggedIn: "false",
+  });
+
+  useEffect(() => {
+    axios
+      .get("/api/verify")
+      .then(({ data }) => {
+        return setUser({
+          username: data.user.username,
+          bucket_list: data.user.bucket_list,
+          loggedIn: data.user.loggedIn,
+        });
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  function logIn(userData) {
+    setUser({
+      username: userData.username,
+      bucket_list: userData.bucket_list,
+      loggedIn: userData.loggedIn,
+    });
+  }
+
+  if (user.loggedIn === "true") return <User user={user} logIn={logIn} />;
+  return <Login logIn={logIn} />;
 }
 
 export default App;

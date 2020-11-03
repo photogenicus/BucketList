@@ -14,7 +14,10 @@ module.exports = {
         type: Sequelize.STRING,
       },
       bucket_list: {
-        type: Sequelize.JSON,
+        type: Sequelize.ARRAY(Sequelize.TEXT),
+      },
+      loggedIn: {
+        type: Sequelize.STRING,
       },
     });
   },
