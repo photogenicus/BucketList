@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function User() {
-  const [activity, setActivity] = useState({ actTitle: "", actDesc: "" });
-  const { actTitle, actDesc } = activity;
+  const [activity, setActivity] = useState({
+    actDesc: "",
+  });
+  const { listItem } = activity;
 
   function saveActivity(e) {
     e.preventDefault();
@@ -15,39 +17,27 @@ function User() {
       body: JSON.stringify(activity),
     })
       .then((res) => res.json())
-      .then((data) => setActivity(data));
-    setActivity("").catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   }
   return (
     <div className="user-page">
-      <div className="user-form">
-        <form>
-          <input
-            type="text"
-            className="activity-title"
-            placeholder="Activity Title"
-            value={actTitle || ""}
-            onChange={(e) =>
-              setActivity({ ...activity, actTitle: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            className="activity-description"
-            placeholder="Activity Description"
-            value={actDesc || ""}
-            onChange={(e) =>
-              setActivity({ ...activity, actDesc: e.target.value })
-            }
-          />
-        </form>
-        <div className="user-form-buttons">
-          <button className="save-btn" onClick={saveActivity} type="submit">
-            Save
-          </button>
-        </div>
+      <div className="bucket-title">Type in your Bucket List</div>
+      <div className="activity-input">
+        <input
+          type="text"
+          className="bucket-input"
+          placeholder="Activity Title"
+          value={listItem || ""}
+          onChange={(e) =>
+            setActivity({ ...activity, listItem: e.target.value })
+          }
+        />
       </div>
-      <div className="user-activities">Activities</div>
+      <div className="bucket-button">
+        <button className="bucket-btn" onClick={saveActivity} type="submit">
+          Save
+        </button>
+      </div>
     </div>
   );
 }

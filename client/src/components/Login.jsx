@@ -9,18 +9,9 @@ function Login({ logIn }) {
 
   function loginInfo(e) {
     e.preventDefault();
-    // axios
-    //   .post("/api/user", login)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     fetch("/api/login", {
       method: "POST",
       headers: {
-        // Accept: 'application/json',
         "Content-Type": "application/json",
       },
       body: JSON.stringify(login),
@@ -28,26 +19,17 @@ function Login({ logIn }) {
       .then((res) => res.json())
       .then((data) => {
         setLogin("");
-        console.log('logged in: ',data);
         if (data) {
-          logIn();
+          logIn(data);
         } else {
-          return null
+          return null;
         }
       })
-    .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   function signUp(e) {
     e.preventDefault();
-    // axios
-    //   .post("/api/user", login)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     fetch("/api/signup", {
       method: "POST",
       headers: {
@@ -59,14 +41,13 @@ function Login({ logIn }) {
       .then((res) => res.json())
       .then((data) => {
         setLogin("");
-        console.log('logged in: ',data);
         if (data) {
-          logIn();
+          logIn(data);
         } else {
-          return null
+          return null;
         }
       })
-    .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   }
   return (
     <div className="login-form">

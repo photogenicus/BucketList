@@ -88,10 +88,64 @@ html {
   animation-fill-mode: forwards;
   opacity: 0;
 }
-.login-btn:hover {
+.bucket-btn:hover, .login-btn:hover {
   color: gray;
 }
 
-.login-btn,.login-field:focus {
+.bucket-btn, .bucket-input, .login-btn, .login-field:focus {
   outline: none;
 }
+
+.user-page {
+  margin-top: 15em;
+}
+
+.bucket-title {
+  font-size: 3em;
+  position: relative;
+  animation: title;
+  animation-duration: 2.5s;
+  animation-fill-mode: forwards;
+}
+
+
+.activity-input {
+  display: flex;
+  justify-content: center;
+}
+
+.bucket-input {
+  margin-top: 3em;
+  height: 2em;
+  border: 0;
+  border-bottom: 1px solid;
+  font-size: 1em;
+  position: relative;
+  animation-name: input;
+  animation-delay: 2s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+.bucket-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.bucket-btn {
+  height: 2.5em;
+  width: 4em;
+  background-color: white;
+  border: none;
+  font-size: 1em;
+  position: relative;
+  animation-name: input;
+  animation-delay: 2s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+
