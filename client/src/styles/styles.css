@@ -148,4 +148,17 @@ html {
   opacity: 0;
 }
 
+.card {
+  border: .1rem solid black;
+  width:8rem;
+  height: min-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+}
 
+.users__container {
+  display: flex;
+
+}

@@ -1,13 +1,30 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import UserCard from "./UserCard";
 
-function User() {
+function User({ user }) {
   const [activity, setActivity] = useState({
+    username: user,
     actDesc: "",
   });
-  const { listItem } = activity;
 
+  const { listItem } = activity;
+  const [userList, setUserList] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/api/all")
+      .then(({ data }) => {
+        console.log(data);
+        setUserList(data);
+        return true;
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const users = userList.map((user, i) => {
+    return <UserCard name={user.username} bucket={user.bucket_list} key={i} />;
+  });
   function saveActivity(e) {
-    e.preventDefault();
     fetch("/api/saveActivity", {
       method: "POST",
       headers: {
@@ -38,6 +55,7 @@ function User() {
           Save
         </button>
       </div>
+      <div className="users__container">{users}</div>
     </div>
   );
 }
