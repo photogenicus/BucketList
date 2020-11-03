@@ -1,11 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import UserCard from "./UserCard";
 
-function User() {
-  const [activity, setActivity] = useState({ actTitle: "", actDesc: "" });
-  const { actTitle, actDesc } = activity;
+function User({ user }) {
+  const [activity, setActivity] = useState({
+    username: user,
+    actDesc: "",
+  });
 
+  const { listItem } = activity;
+  const [userList, setUserList] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/api/all")
+      .then(({ data }) => {
+        console.log(data);
+        setUserList(data);
+        return true;
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const users = userList.map((user, i) => {
+    return <UserCard name={user.username} bucket={user.bucket_list} key={i} />;
+  });
   function saveActivity(e) {
-    e.preventDefault();
     fetch("/api/saveActivity", {
       method: "POST",
       headers: {
@@ -15,39 +34,28 @@ function User() {
       body: JSON.stringify(activity),
     })
       .then((res) => res.json())
-      .then((data) => setActivity(data));
-    setActivity("").catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   }
   return (
     <div className="user-page">
-      <div className="user-form">
-        <form>
-          <input
-            type="text"
-            className="activity-title"
-            placeholder="Activity Title"
-            value={actTitle || ""}
-            onChange={(e) =>
-              setActivity({ ...activity, actTitle: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            className="activity-description"
-            placeholder="Activity Description"
-            value={actDesc || ""}
-            onChange={(e) =>
-              setActivity({ ...activity, actDesc: e.target.value })
-            }
-          />
-        </form>
-        <div className="user-form-buttons">
-          <button className="save-btn" onClick={saveActivity} type="submit">
-            Save
-          </button>
-        </div>
+      <div className="bucket-title">Type in your Bucket List</div>
+      <div className="activity-input">
+        <input
+          type="text"
+          className="bucket-input"
+          placeholder="Activity Title"
+          value={listItem || ""}
+          onChange={(e) =>
+            setActivity({ ...activity, listItem: e.target.value })
+          }
+        />
       </div>
-      <div className="user-activities">Activities</div>
+      <div className="bucket-button">
+        <button className="bucket-btn" onClick={saveActivity} type="submit">
+          Save
+        </button>
+      </div>
+      <div className="users__container">{users}</div>
     </div>
   );
 }
